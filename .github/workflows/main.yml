@@ -39,7 +39,7 @@ jobs:
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./API/simple-api-main/simple-api
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/api-rest
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:api-rest
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push database
@@ -47,7 +47,7 @@ jobs:
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./BaseDonnées
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/database
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:database
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push httpd
@@ -55,7 +55,7 @@ jobs:
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./httpd
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/hattpd
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:httpd
           push: ${{ github.ref == 'refs/heads/main' }}
 
      #finally build your app with the latest command
