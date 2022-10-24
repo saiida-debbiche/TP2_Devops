@@ -60,4 +60,6 @@ jobs:
 
      #finally build your app with the latest command
       - name: Build and test with Maven
-        run: mvn clean verify --file API/simple-api-main/simple-api
+        run:  mvn -B verify sonar:sonar -Dsonar.projectKey=saiida-debbiche_TP2_Devops -Dsonar.organization=saiida-debbiche -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./API/simple-api-main/simple-api/pom.xml
+       l
+
