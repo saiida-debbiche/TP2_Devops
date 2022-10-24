@@ -18,6 +18,10 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+     #finally build your app with the latest command
+      - name: Build and test with Maven
+        run:  mvn -B verify sonar:sonar -Dsonar.projectKey=saiida-debbiche_TP2_Devops -Dsonar.organization=saiida-debbiche -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./API/simple-api-main/simple-api/pom.xml
+       
 
   # define job to build and publish docker image
   build-and-push-docker-image:
@@ -58,8 +62,5 @@ jobs:
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:httpd
           push: ${{ github.ref == 'refs/heads/main' }}
 
-     #finally build your app with the latest command
-      - name: Build and test with Maven
-        run:  mvn -B verify sonar:sonar -Dsonar.projectKey=saiida-debbiche_TP2_Devops -Dsonar.organization=saiida-debbiche -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./API/simple-api-main/simple-api/pom.xml
-       
+
 
