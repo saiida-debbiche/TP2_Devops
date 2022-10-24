@@ -39,7 +39,7 @@ jobs:
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./API/simple-api-main/simple-api
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/simple-api
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/api-rest
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push database
