@@ -1,0 +1,13 @@
+# tasks file for database
+- name: Create a database container
+  docker_container:
+    name: database
+    image: saiidadebbiche26/tp-devops:database
+    state: started
+    pull: yes
+    env: 
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: db
+    networks:
+    - name : "app-network"

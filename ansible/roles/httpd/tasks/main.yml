@@ -1,0 +1,11 @@
+# tasks file for httpd
+- name: Run HTTPD
+  docker_container:
+    name: httpd
+    image: saiidadebbiche26/tp-devops:httpd
+    state: started
+    recreate: yes
+    ports: 
+      - "80:80"
+    networks:
+    - name : "app-network"

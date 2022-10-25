@@ -1,0 +1,9 @@
+# tasks file for api
+- name: Create an api container
+  docker_container:
+    name: api-rest
+    image: saiidadebbiche26/tp-devops:api-rest
+    state: started
+    pull: yes
+    networks:
+    - name : "app-network"
