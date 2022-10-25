@@ -18,6 +18,10 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+     #finally build your app with the latest command
+      - name: Build and test with Maven
+        run:  mvn -B verify sonar:sonar -Dsonar.projectKey=saiida-debbiche_TP2_Devops -Dsonar.organization=saiida-debbiche -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./API/simple-api-main/simple-api/pom.xml
+       
 
   # define job to build and publish docker image
   build-and-push-docker-image:
@@ -29,33 +33,34 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+        
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build image and push backend
         uses: docker/build-push-action@v2 
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./API/simple-api-main/simple-api
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/simple-api
-          push: ${{ github.ref == 'refs/heads/main }}
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:api-rest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push database
         uses: docker/build-push-action@v2 
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./BaseDonnées
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/database
-          push: ${{ github.ref == 'refs/heads/main }}
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:database
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push httpd
         uses: docker/build-push-action@v2 
         with:
           # relative path to the place where source code with Dockerfile is located
           context: ./httpd
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf/httpd
-          push: ${{ github.ref == 'refs/heads/main }}
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:httpd
+          push: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: Login to DockerHub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-     #finally build your app with the latest command
-      - name: Build and test with Maven
-        run: mvn clean verify --file API/simple-api-main/simple-api
+
+
